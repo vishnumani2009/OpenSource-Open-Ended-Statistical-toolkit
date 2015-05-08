@@ -1513,14 +1513,14 @@ class App(QtGui.QMainWindow):
         
 
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu('Regression')
+        fileMenu = menubar.addMenu('&Regression')
         fileMenu.addAction('Linear Regression',self.flinear)
         fileMenu.addAction('Multiple Regression',self.fmlinear)
         fileMenu.addAction('Lasso',self.flasso)
         fileMenu.addAction('Ridge',self.fridge)
         fileMenu.addAction('Curvilinear',self.fpoly)
+        fileMenu.addAction('Revised Multiple Linear',self.fpoly)
         
-
 
         menubar = self.menuBar()
         fileMenu1 = menubar.addMenu('&Unsupervised Clustering')
@@ -1552,16 +1552,16 @@ class App(QtGui.QMainWindow):
         fileMenu.addAction('Test Learners',self.testme)
         
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&DOE')
+        fileMenu = menubar.addMenu('&Design of Experiments')
         fileMenu.addAction('Full factorial',self.ffront1)
         fileMenu.addAction('2-L-Fullfactorial',self.ffront2)
         fileMenu.addAction('Fractional factorial',self.ffront3)
         
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&Tests')
-        fileMenu.addAction('ANOVA',self.fanova)
-        fileMenu.addAction('ARIMA',self.testme)
-        fileMenu.addAction('chi-2',self.testme)
+        fileMenu = menubar.addMenu('&Tests and GOF')
+        fileMenu.addAction('Anova Test',self.fanova)
+        fileMenu.addAction('Arima fit',self.testme)
+        fileMenu.addAction('chi-2 test',self.testme)
         fileMenu.addAction('P-test',self.testme)
         
         menubar = self.menuBar()
@@ -1573,14 +1573,14 @@ class App(QtGui.QMainWindow):
         fileMenu.addAction('Metropolis Hastings',self.testme)
         fileMenu.addAction('Slice Sampling',self.testme)
         
+        
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('Extra-Features')
         fileMenu.addAction('Editor',self.editdisp)
         fileMenu.addAction('Browser',self.browsecall)
         fileMenu.addAction('Git',self.gitcall)
         fileMenu.addAction('G-Drive',self.testme)
-        
-        #self.setGeometry(100, 100, 700, 600)
+
         self.showMaximized()
         self.setWindowTitle('MLSKit V 1.0')
         self.layout = QVBoxLayout(self)
@@ -1592,10 +1592,7 @@ def splashscreen(app):
         splash = QSplashScreen(splash_pix)
         progressBar = QProgressBar(splash)
         progressBar.setGeometry(splash.width()*0.2, splash.height()*0.95,splash.width()*0.8, splash.height()/25.0)
-
         splash.setMask(splash_pix.mask())
-
-
         splash.show()
         for i in range(0, 101):
             progressBar.setValue(i)

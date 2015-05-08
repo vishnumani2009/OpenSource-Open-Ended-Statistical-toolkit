@@ -8,6 +8,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
+from doe import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -27,6 +28,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(239, 253)
+        self.n=3
         self.pushButton_3 = QtGui.QPushButton(Form)
         self.pushButton_3.setGeometry(QtCore.QRect(40, 210, 161, 23))
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
@@ -49,9 +51,14 @@ class Ui_Form(object):
         self.spinBox.setGeometry(QtCore.QRect(130, 30, 42, 22))
         self.spinBox.setMaximum(10000)
         self.spinBox.setObjectName(_fromUtf8("spinBox"))
-
+        self.spinBox.valueChanged.connect(self.setn)
+        self.pushButton_3.clicked.connect(self.start2n)
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        
+    def setn(self):
+        self.n=self.spinBox.value()
+        print self.n
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(_translate("Form", "Form", None))
@@ -62,3 +69,15 @@ class Ui_Form(object):
         self.groupBox_2.setTitle(_translate("Form", "Options", None))
         self.label.setText(_translate("Form", "Enter N", None))
 
+    def start2n(self):
+        print OSOEST_ff2n(self.n)
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Dialog = QtGui.QDialog()
+    ui = Ui_Form()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())

@@ -41,21 +41,23 @@ def line_plot(data_arrays, xlabel, ylabel, labels, title, f):
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.savefig(f, format="png")
+    plt.show()
     plt.clf()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Divides data into the categories by ')
-    parser.add_argument('data', type=argparse.FileType("rb"), help='CSV file of data input')
-    args = parser.parse_args()
-    # reading the file
-    with args.data as csvfile:
-        print csvfile
-        reader = csv.reader(csvfile)
-        input_list = np.array(map(lambda line: np.array(map(lambda i: float(i), line)), reader))
+##    parser = argparse.ArgumentParser(description='Divides data into the categories by ')
+##    parser.add_argument('data', type=argparse.FileType("rb"), help='CSV file of data input')
+##    args = parser.parse_args()
+##    # reading the file
+##    with args.data as csvfile:
+##        print type(csvfile)
+    csvfile=open("input.csv","rb")
+    reader = csv.reader(csvfile)
+    input_list = np.array(map(lambda line: np.array(map(lambda i: float(i), line)), reader))
 
     x_list = input_list[:,0]
-    print x_list
+    #print x_list
     e_matrix = input_list[:,1:]
-    print e_matrix
+    #print e_matrix
     mean_matrix = EM.simulate_E_M(x_list, e_matrix, 100)
     line_plot(mean_matrix, 'step', 'mean', ['Distribution 1','Distribution 2','Distribution 3'], 'E-M Learning' ,'sample_result.png' )

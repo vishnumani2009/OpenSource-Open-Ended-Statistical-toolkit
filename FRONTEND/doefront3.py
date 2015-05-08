@@ -1,13 +1,6 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'fractionalui.ui'
-#
-# Created: Wed Apr 08 07:10:07 2015
-#      by: PyQt4 UI code generator 4.10.4
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt4 import QtCore, QtGui
+from doe import *
+
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -45,6 +38,7 @@ class Ui_Form(object):
         self.label = QtGui.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(10, 80, 181, 16))
         self.label.setObjectName(_fromUtf8("label"))
+        self.pushButton_3.clicked.connect(self.start)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -56,4 +50,19 @@ class Ui_Form(object):
         self.lineEdit.setText(_translate("Form", "Fractionall Factorial", None))
         self.pushButton_2.setText(_translate("Form", "Output Folder", None))
         self.label.setText(_translate("Form", "Enter the generator string", None))
+    def start(self):
+        inputs=str(self.textEdit.toPlainText())
+        OSOEST_fracfact(inputs)
+
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Dialog = QtGui.QDialog()
+    ui = Ui_Form()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
+
 

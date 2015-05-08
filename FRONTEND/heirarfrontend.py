@@ -30,6 +30,7 @@ class Ui_Form(object):
         self.groupBox = QtGui.QGroupBox(Form)
         self.groupBox.setGeometry(QtCore.QRect(20, 10, 221, 61))
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
+        self.lin="single"
 
         self.lineEdit = QtGui.QLineEdit(self.groupBox)
         self.lineEdit.setGeometry(QtCore.QRect(40, 20, 141, 20))
@@ -69,16 +70,25 @@ class Ui_Form(object):
         self.groupBox_2.setGeometry(QtCore.QRect(20, 200, 221, 80))
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
 
-        self.lineEdit_2 = QtGui.QLineEdit(self.groupBox_2)
-        self.lineEdit_2.setGeometry(QtCore.QRect(30, 20, 161, 20))
-        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
-
-        self.lineEdit_3 = QtGui.QLineEdit(self.groupBox_2)
-        self.lineEdit_3.setGeometry(QtCore.QRect(30, 50, 161, 20))
-        self.lineEdit_3.setObjectName(_fromUtf8("lineEdit_3"))
+##        self.lineEdit_2 = QtGui.QLineEdit(self.groupBox_2)
+##        self.lineEdit_2.setGeometry(QtCore.QRect(30, 20, 161, 20))
+##        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
+##
+##        self.lineEdit_3 = QtGui.QLineEdit(self.groupBox_2)
+##        self.lineEdit_3.setGeometry(QtCore.QRect(30, 50, 161, 20))
+##        self.lineEdit_3.setObjectName(_fromUtf8("lineEdit_3"))
+        self.comboBox_3 = QtGui.QComboBox(self.groupBox_2)
+        self.comboBox_3.setGeometry(QtCore.QRect(30, 25, 161, 20))
+        self.comboBox_3.setObjectName(_fromUtf8("comboBox_2"))
+        self.comboBox_3.addItem(_fromUtf8(""))
+        self.comboBox_3.addItem(_fromUtf8(""))
+        self.comboBox_3.addItem(_fromUtf8(""))
+        self.comboBox_3.activated[str].connect(self.getlinkage)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+    def getlinkage(self,txt):
+        self.lin= txt
         
     def takeinput(self):
         fname = QtGui.QFileDialog.getOpenFileName(None, 'Open file', 'C:')
@@ -93,22 +103,43 @@ class Ui_Form(object):
                 
 
     def starthcc(self):
+        print self.dm,self.lin
         dataFrame = pd.DataFrame(self.tr, columns=['x', 'y'])
         from scipy.spatial.distance import pdist, squareform
         
         # not printed as pretty, but the values are correct
-        distxy = squareform(pdist(dataFrame, metric=self.dm))
+        distxy = squareform(pdist(dataFrame, metric=(self.dm)))
         #print distxy
-        
-        plt.figure()
-        R = dendrogram(linkage(distxy, method='complete'))
-        
-        plt.xlabel('X units')
-        plt.ylabel('Y units')
-        plt.suptitle('Cluster Dendrogram', fontweight='bold', fontsize=14);
-       
-        plt.show()
-        pass
+        if self.lin=="single":
+            plt.figure()
+            R = dendrogram(linkage(distxy, method=str(self.lin)))
+            
+            plt.xlabel('X units')
+            plt.ylabel('Y units')
+            plt.suptitle('Cluster Dendrogram', fontweight='bold', fontsize=14);
+           
+            plt.show()
+        elif self.lin=="complete":
+            plt.figure()
+            R = dendrogram(linkage(distxy, method=str(self.lin)))
+            
+            plt.xlabel('X units')
+            plt.ylabel('Y units')
+            plt.suptitle('Cluster Dendrogram', fontweight='bold', fontsize=14);
+           
+            plt.show()
+        else:
+            plt.figure()
+            R = dendrogram(linkage(distxy, method=str(self.lin)))
+            
+            plt.xlabel('X units')
+            plt.ylabel('Y units')
+            plt.suptitle('Cluster Dendrogram', fontweight='bold', fontsize=14);
+           
+            plt.show()
+            
+            
+            
 
     def getdis(self,txt):
             if txt=="chebychev":
@@ -127,6 +158,10 @@ class Ui_Form(object):
         self.comboBox_2.setItemText(0, _translate("Form", "euclidean", None))
         self.comboBox_2.setItemText(1, _translate("Form", "chebychev", None))
         self.comboBox_2.setItemText(2, _translate("Form", "cityblock", None))
+        self.comboBox_3.setItemText(0, _translate("Form", "complete", None))
+        self.comboBox_3.setItemText(1, _translate("Form", "single", None))
+        self.comboBox_3.setItemText(2, _translate("Form", "average", None))
+        
         self.checkBox_3.setText(_translate("Form", "Random Data", None))
         self.checkBox_4.setText(_translate("Form", "plot dendrogram", None))
         self.pushButton_3.setText(_translate("Form", "Start", None))

@@ -8,7 +8,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-
+import numpy as np
+from doe import *
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -36,13 +37,16 @@ class Ui_Form(object):
         self.pushButton_3 = QtGui.QPushButton(Form)
         self.pushButton_3.setGeometry(QtCore.QRect(40, 140, 161, 23))
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
+        self.pushButton_3.clicked.connect(self.startfull)
+        
         self.pushButton_2 = QtGui.QPushButton(Form)
         self.pushButton_2.setGeometry(QtCore.QRect(40, 110, 161, 23))
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        #self.pushButton_2.clicked.connect(self.startknn)
         self.pushButton = QtGui.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(40, 80, 161, 23))
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
-
+        self.pushButton.clicked.connect(self.takeinput)
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -54,3 +58,26 @@ class Ui_Form(object):
         self.pushButton_2.setText(_translate("Form", "Output Folder", None))
         self.pushButton.setText(_translate("Form", "Input Levels  File", None))
 
+    def takeinput(self):
+        fname = QtGui.QFileDialog.getOpenFileName(None, 'Open file', 'C:')
+        self.testdata=[]
+        for line in open(str(fname)):
+            row=line.split("\n")[0].split(",")
+            self.testdata.append(row)
+        self.testdata=np.array(self.testdata).astype(np.int)      
+        print "---test data taken successfully---"
+    def startfull(self):
+        for i in self.testdata:
+            print i
+            print OSOEST_fullfact(i)
+        print "started---"
+        
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Dialog = QtGui.QDialog()
+    ui = Ui_Form()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
+    
